@@ -6,7 +6,6 @@ public interface Repository<I, T> {
 	
 	T gravar(T t);
 	
-	
 	T update(T t);
 	
 	void remove(T t);

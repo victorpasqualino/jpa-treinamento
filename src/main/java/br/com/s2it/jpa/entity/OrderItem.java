@@ -1,13 +1,34 @@
 package br.com.s2it.jpa.entity;
 
-public class OrderItem {
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "order_item")
+public class OrderItem implements Serializable {
+
+	private static final long serialVersionUID = 8604807817139703621L;
+
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "order_id", nullable = false)
 	private Order order;
 
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 
+	@Column(name = "valor", nullable = false)
 	private Double valor;
 
+	@Column(name = "quantidade", nullable = false)
 	private Integer quantidade;
 
 	public Order getOrder() {

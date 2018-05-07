@@ -1,18 +1,18 @@
 package br.com.s2it.jpa.repository;
 
-import java.sql.Connection;
+import javax.sql.DataSource;
 
 public abstract class AbstractJdbcrepository<I, T> implements JdbcRepository<I, T> {
 	
-	private Connection connection;
+	private DataSource dataSource;
 	
-	public AbstractJdbcrepository(Connection connection) {
-		this.connection = connection;
+	public AbstractJdbcrepository(DataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 	
 	@Override
-	public Connection getConnection() {
-		return connection;
+	public DataSource getDataSource() {
+		return dataSource;
 	}
 
 }

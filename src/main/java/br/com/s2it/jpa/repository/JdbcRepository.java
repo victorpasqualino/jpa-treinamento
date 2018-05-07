@@ -1,9 +1,9 @@
 package br.com.s2it.jpa.repository;
 
-import java.sql.Connection;
+import javax.sql.DataSource;
 
 public interface JdbcRepository<I, T> extends Repository<I, T> {
 	
-	Connection getConnection();
+	DataSource getDataSource();
 
 }

@@ -1,15 +1,40 @@
 package br.com.s2it.jpa.entity;
 
-public class Cliente {
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "cliente")
+public class Cliente implements Serializable {
+
+	private static final long serialVersionUID = 8031281328013854294L;
+
+	@Id
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "clienteGenerator", sequenceName = "sq_cliente")
+	@GeneratedValue(generator = "clienteGenerator", strategy = GenerationType.SEQUENCE)
+	@Column(name = "id")
 	private Long id;
 
+	@Column(name = "login", nullable = false)
 	private String login;
 
+	@Column(name = "email", nullable = false)
 	private String email;
 
+	@Column(name = "password", nullable = false)
 	private String password;
 
+	@ManyToOne
+	@JoinColumn(name = "pessoa_id", nullable = false)
 	private Pessoa pessoa;
 
 	public Long getId() {

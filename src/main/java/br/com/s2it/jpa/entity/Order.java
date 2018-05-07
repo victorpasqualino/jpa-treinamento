@@ -1,17 +1,44 @@
 package br.com.s2it.jpa.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Order {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "order_")
+public class Order implements Serializable {
+
+	private static final long serialVersionUID = -526678874853490743L;
+
+	@Id
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "orderGenerator", sequenceName = "sq_order")
+	@GeneratedValue(generator = "orderGenerator", strategy = GenerationType.SEQUENCE)
+	@Column(name = "id")
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "cliente_id", nullable = false)
 	private Cliente cliente;
 
+	@Column(name = "valor")
 	private Double valor;
 
-	private LocalDateTime data;
+	@Column(name = "data_compra")
+	private LocalDateTime dataCompra;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status_pagamento")
 	private StatusPagamento statusPagamento;
 
 	public Long getId() {
@@ -38,12 +65,12 @@ public class Order {
 		this.valor = valor;
 	}
 
-	public LocalDateTime getData() {
-		return data;
+	public LocalDateTime getDataCompra() {
+		return dataCompra;
 	}
 
-	public void setData(LocalDateTime data) {
-		this.data = data;
+	public void setDataCompra(LocalDateTime dataCompra) {
+		this.dataCompra = dataCompra;
 	}
 
 	public StatusPagamento getStatusPagamento() {
@@ -53,7 +80,7 @@ public class Order {
 	public void setStatusPagamento(StatusPagamento statusPagamento) {
 		this.statusPagamento = statusPagamento;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
