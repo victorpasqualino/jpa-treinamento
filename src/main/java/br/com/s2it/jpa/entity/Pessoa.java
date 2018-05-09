@@ -1,5 +1,7 @@
 package br.com.s2it.jpa.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -13,8 +15,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "pessoa")
@@ -33,13 +37,19 @@ public abstract class Pessoa {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo", nullable = false, insertable = false, updatable = false)
-	private TipoPessoa tipo;
+	private TipoPessoa tipo; 
 
 	@Column(name = "codigo", nullable = false)
 	private String codigo;
 
 	@Column(name = "nome", nullable = false)
 	private String nome;
+	
+	@OneToMany(mappedBy = "pessoa")
+	private List<Cliente> clientes;
+	
+	@Transient
+	private String nomeFormatadoCpf;
 	
 	public abstract String getCodigoFormatado();
 

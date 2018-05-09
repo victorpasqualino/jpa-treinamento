@@ -2,15 +2,19 @@ package br.com.s2it.jpa.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -40,6 +44,13 @@ public class Order implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status_pagamento")
 	private StatusPagamento statusPagamento;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "order_item", 
+		joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "cliente_id", referencedColumnName = "id")
+	)
+	private Set<Item> items;
 
 	public Long getId() {
 		return id;
@@ -79,6 +90,14 @@ public class Order implements Serializable {
 
 	public void setStatusPagamento(StatusPagamento statusPagamento) {
 		this.statusPagamento = statusPagamento;
+	}
+	
+	public Set<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(Set<Item> items) {
+		this.items = items;
 	}
 
 	@Override
